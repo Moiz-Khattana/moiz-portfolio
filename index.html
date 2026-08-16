@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moiz | Shopify Developer</title>
+<meta name="description" content="Moiz - Professional Shopify Developer specializing in custom themes, apps, and e-commerce solutions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/svg+xml" href="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@v10/icons/shopify.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@v10/icons/shopify.svg">
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor-dot"></div>
+<div class="cursor-outline"></div>
+
+<!-- Loader -->
+<div class="loader">
+  <div class="loader-content">
+    <div class="loader-shopify-box">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@v10/icons/shopify.svg" alt="Shopify" class="loader-shopify-icon" />
+    </div>
+    <div class="loader-text">MOIZ<span>.</span></div>
+    <p class="loader-subtext">Loading Shopify Portfolio</p>
+    <div class="loader-bar">
+      <div class="loader-bar-fill" id="loaderBarFill"></div>
+    </div>
+    <p class="loader-percent" id="loaderPercent">0%</p>
+  </div>
+</div>
+
+<!-- Nav -->
+<header class="navbar">
+  <div class="container nav-container">
+    <a href="#home" class="logo">Moiz<span>.</span></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="#contact" class="btn btn-primary nav-cta">Hire Me</a>
+    <button class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <div class="hero-bg">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="grid-overlay"></div>
+  </div>
+  <div class="container hero-container">
+    <div class="hero-text">
+      <div class="badge fade-up">
+        <span class="dot-pulse"></span> Available for Freelance Work
+      </div>
+      <h1 class="fade-up delay-1">
+        Hi, I'm <span class="highlight">Moiz</span><br>
+        Shopify Developer &<br>
+        <span class="typed-text" id="typed"></span>
+      </h1>
+      <p class="hero-desc fade-up delay-2">
+        I build fast, conversion-focused Shopify stores and custom apps that help
+        brands scale their e-commerce business.
+      </p>
+      <div class="hero-buttons fade-up delay-3">
+        <a href="#projects" class="btn btn-primary">View My Work <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="#contact" class="btn btn-outline">Let's Talk</a>
+      </div>
+      <div class="hero-stats fade-up delay-4">
+        <div class="stat">
+          <h3><span class="counter" data-target="50">0</span>+</h3>
+          <p>Projects Completed</p>
+        </div>
+        <div class="stat">
+          <h3><span class="counter" data-target="50">0</span>+</h3>
+          <p>Happy Clients</p>
+        </div>
+        <div class="stat">
+          <h3><span class="counter" data-target="4">0</span>+</h3>
+          <p>Years Experience</p>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual fade-up delay-2">
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+        </div>
+        <div class="code-block">
+<pre><code><span class="c-key">const</span> <span class="c-var">developer</span> = {
+  <span class="c-prop">name</span>: <span class="c-str">'Moiz'</span>,
+  <span class="c-prop">role</span>: <span class="c-str">'Shopify Expert'</span>,
+  <span class="c-prop">skills</span>: [
+    <span class="c-str">'Liquid'</span>, <span class="c-str">'JavaScript'</span>,
+    <span class="c-str">'React'</span>, <span class="c-str">'Node.js'</span>
+  ],
+  <span class="c-prop">passion</span>: <span class="c-str">'E-commerce'</span>,
+  <span class="c-prop">available</span>: <span class="c-key">true</span>
+};</code></pre>
+        </div>
+      </div>
+      <img class="shopify-float" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@v10/icons/shopify.svg" alt="shopify" />
+    </div>
+  </div>
+  <a href="#about" class="scroll-down">
+    <i class="fa-solid fa-chevron-down"></i>
+  </a>
+</section>
+
+<!-- About -->
+<section class="about" id="about">
+  <div class="container about-container">
+    <div class="about-visual reveal">
+    <div class="about-img-wrap">
+        <div class="about-img">
+        <img src="PASSPORT SIZE PICTURE.png" alt="Moiz - Shopify Developer" class="profile-photo">
+        </div>
+        <div class="exp-badge">
+        <h3>4+</h3>
+        <p>Years of<br>Experience</p>
+        </div>
+    </div>
+    </div>
+    <div class="about-text reveal">
+      <span class="section-tag">About Me</span>
+      <h2 class="section-title">Turning Ideas Into Powerful Online Stores</h2>
+      <p>
+        I'm Moiz, a dedicated Shopify Developer with hands-on experience building,
+        customizing, and optimizing e-commerce stores. I specialize in Liquid
+        theme development, custom Shopify app creation, and performance optimization
+        that drives real business results.
+      </p>
+      <p>
+        My goal is simple — deliver clean code, beautiful design, and stores that
+        convert visitors into loyal customers.
+      </p>
+      <div class="about-features">
+        <div class="feature">
+          <i class="fa-solid fa-bolt"></i>
+          <div>
+            <h4>Fast Delivery</h4>
+            <p>Efficient workflow & timely delivery</p>
+          </div>
+        </div>
+        <div class="feature">
+          <i class="fa-solid fa-code"></i>
+          <div>
+            <h4>Clean Code</h4>
+            <p>Maintainable & scalable solutions</p>
+          </div>
+        </div>
+        <div class="feature">
+          <i class="fa-solid fa-headset"></i>
+          <div>
+            <h4>24/7 Support</h4>
+            <p>Ongoing support after delivery</p>
+          </div>
+        </div>
+        <div class="feature">
+          <i class="fa-solid fa-chart-line"></i>
+          <div>
+            <h4>Growth Focused</h4>
+            <p>Built to convert & scale</p>
+          </div>
+        </div>
+      </div>
+      <a href="MY CV (1) (1).pdf" class="btn btn-primary">Download CV <i class="fa-solid fa-download"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- Skills -->
+<section class="skills" id="skills">
+  <div class="container">
+    <div class="section-header center reveal">
+      <span class="section-tag">My Expertise</span>
+      <h2 class="section-title">Skills & Technologies</h2>
+      <p class="section-desc">Tools and technologies I use to build exceptional Shopify experiences</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="skill-icon"><i class="fa-brands fa-shopify"></i></div>
+        <h3>Shopify Liquid</h3>
+        <div class="skill-bar"><div class="skill-fill" data-width="95"></div></div>
+        <span class="skill-percent">95%</span>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon"><i class="fa-brands fa-js"></i></div>
+        <h3>JavaScript</h3>
+        <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+        <span class="skill-percent">90%</span>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon"><i class="fa-brands fa-react"></i></div>
+        <h3>React / Next.js</h3>
+        <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+        <span class="skill-percent">85%</span>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon"><i class="fa-brands fa-node-js"></i></div>
+        <h3>Node.js</h3>
+        <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
+        <span class="skill-percent">80%</span>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon"><i class="fa-solid fa-plug"></i></div>
+        <h3>Shopify App Dev</h3>
+        <div class="skill-bar"><div class="skill-fill" data-width="88"></div></div>
+        <span class="skill-percent">88%</span>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon"><i class="fa-brands fa-css3-alt"></i></div>
+        <h3>HTML / CSS</h3>
+        <div class="skill-bar"><div class="skill-fill" data-width="97"></div></div>
+        <span class="skill-percent">97%</span>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon"><i class="fa-solid fa-database"></i></div>
+        <h3>REST & GraphQL APIs</h3>
+        <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+        <span class="skill-percent">85%</span>
+      </div>
+      <div class="skill-card reveal">
+        <div class="skill-icon"><i class="fa-brands fa-git-alt"></i></div>
+        <h3>Git / GitHub</h3>
+        <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+        <span class="skill-percent">90%</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section class="projects" id="projects">
+  <div class="container">
+    <div class="section-header center reveal">
+      <span class="section-tag">Portfolio</span>
+      <h2 class="section-title">Featured Projects</h2>
+      <p class="section-desc">A selection of Shopify stores and applications I've built</p>
+    </div>
+    <div class="filter-tabs reveal">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="theme">Theme Dev</button>
+      <button class="filter-btn" data-filter="app">App Dev</button>
+      <button class="filter-btn" data-filter="custom">Custom Store</button>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card reveal" data-category="theme">
+        <div class="project-img"><i class="fa-solid fa-store"></i></div>
+        <div class="project-info">
+          <span class="project-tag">Theme Development</span>
+          <h3>Kerri Rossenthal Store</h3>
+          <p>Custom Shopify theme with advanced filtering, quick view, and product recommendations.</p>
+          <div class="project-tech">
+            <span>Liquid</span><span>JavaScript</span><span>SCSS</span>
+          </div>
+          <a href="https://www.kerrirosenthal.com/" class="project-link">View Project <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </div>
+      <div class="project-card reveal" data-category="app">
+        <div class="project-img"><i class="fa-solid fa-cubes"></i></div>
+        <div class="project-info">
+          <span class="project-tag">App Development</span>
+          <h3>Schema Wizard</h3>
+          <p>Custom Shopify app to sync inventory across multiple warehouses in real time.</p>
+          <div class="project-tech">
+            <span>Node.js</span><span>React</span><span>GraphQL</span>
+          </div>
+          <a href="#" class="project-link">View Project <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </div>
+      <div class="project-card reveal" data-category="custom">
+        <div class="project-img"><i class="fa-solid fa-mobile-screen"></i></div>
+        <div class="project-info">
+          <span class="project-tag">Custom Store</span>
+          <h3>SPC Sports Store.</h3>
+          <p>Sports equipment store with dynamic size charts.</p>
+          <div class="project-tech">
+            <span>Shopify Plus</span><span>Liquid</span><span>API</span>
+          </div>
+          <a href="https://spcsports.com/" class="project-link">View Project <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </div>
+      <div class="project-card reveal" data-category="theme">
+        <div class="project-img"><i class="fa-solid fa-dumbbell"></i></div>
+        <div class="project-info">
+          <span class="project-tag">Theme Development</span>
+          <h3>Bleu Rod Beattie Store</h3>
+          <p>Full store build from scratch using custom liquid code builder feature.</p>
+          <div class="project-tech">
+            <span>Liquid</span><span>JavaScript</span><span>CSS3</span>
+          </div>
+          <a href="https://bleurodbeattie.com/" class="project-link">View Project <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </div>
+      <div class="project-card reveal" data-category="app">
+        <div class="project-img"><i class="fa-solid fa-gift"></i></div>
+        <div class="project-info">
+          <span class="project-tag">App Development</span>
+          <h3>Loyalty Rewards App</h3>
+          <p>Points-based loyalty and rewards application integrated directly into checkout.</p>
+          <div class="project-tech">
+            <span>React</span><span>Node.js</span><span>MongoDB</span>
+          </div>
+          <a href="#" class="project-link">View Project <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </div>
+      <div class="project-card reveal" data-category="custom">
+        <div class="project-img"><i class="fa-solid fa-couch"></i></div>
+        <div class="project-info">
+          <span class="project-tag">Custom Store</span>
+          <h3>Ruggable Store</h3>
+          <p>Headless Shopify build using Hydrogen for blazing-fast performance.</p>
+          <div class="project-tech">
+            <span>Hydrogen</span><span>React</span><span>Tailwind</span>
+          </div>
+          <a href="https://ruggable.com/" class="project-link">View Project <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-header center reveal">
+      <span class="section-tag">What I Offer</span>
+      <h2 class="section-title">My Services</h2>
+      <p class="section-desc">Complete Shopify solutions tailored to your business needs</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="fa-solid fa-paintbrush"></i></div>
+        <h3>Custom Theme Design</h3>
+        <p>Pixel-perfect, responsive Shopify themes built from scratch or customized to match your brand.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="fa-solid fa-puzzle-piece"></i></div>
+        <h3>Shopify App Development</h3>
+        <p>Custom public or private apps that extend your store's functionality using Shopify APIs.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="fa-solid fa-arrows-turn-to-dots"></i></div>
+        <h3>Store Migration</h3>
+        <p>Seamless migration from WooCommerce, Magento, or other platforms to Shopify.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="fa-solid fa-gauge-high"></i></div>
+        <h3>Speed Optimization</h3>
+        <p>Improve Core Web Vitals and page speed for better SEO and conversions.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="fa-solid fa-plug-circle-bolt"></i></div>
+        <h3>Third-Party Integrations</h3>
+        <p>Connect your store with ERPs, CRMs, payment gateways, and marketing tools.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon"><i class="fa-solid fa-wrench"></i></div>
+        <h3>Maintenance & Support</h3>
+        <p>Ongoing bug fixes, updates, and feature additions to keep your store running smoothly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <div class="section-header center reveal">
+      <span class="section-tag">Testimonials</span>
+      <h2 class="section-title">What Clients Say</h2>
+    </div>
+    <div class="testimonial-slider reveal">
+      <div class="testimonial-track" id="testimonialTrack">
+        <div class="testimonial-card">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p>"Moiz transformed our outdated store into a modern, fast, and conversion-optimized Shopify experience. Sales increased by 40% within two months!"</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">SJ</div>
+            <div>
+              <h4>Kerri Rose</h4>
+              <span>CEO, Kerri Rossenthal</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p>"Professional, communicative, and technically excellent. Moiz built our custom app exactly as we envisioned and delivered ahead of schedule."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">DR</div>
+            <div>
+              <h4>Jeneva Bell</h4>
+              <span>Founder, Ruggable</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p>"The best Shopify developer we've worked with. Attention to detail and understanding of e-commerce best practices is outstanding."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">AL</div>
+            <div>
+              <h4>Amanda Lee</h4>
+              <span>Founder, SPC Sports</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slider-dots" id="sliderDots"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact" id="contact">
+<div class="container contact-container">
+  <div class="contact-info reveal">
+    <span class="section-tag">Get In Touch</span>
+    <h2 class="section-title">Let's Build Something Great Together</h2>
+    <p>Have a project in mind or just want to say hi? Fill out the form or reach me directly.</p>
+
+    <div class="contact-items">
+      <a href="mailto:haidermoizkhattana@gmail.com" class="contact-item">
+        <i class="fa-solid fa-envelope"></i>
+        <div>
+          <h4>Email</h4>
+          <p>haidermoizkhattana@gmail.com</p>
+        </div>
+      </a>
+
+      <a
+        href="https://wa.me/923379708390?text=Hi%20Moiz%2C%20I%20found%20your%20portfolio%20and%20I%27d%20like%20to%20discuss%20a%20Shopify%20project."
+        target="_blank"
+        rel="noopener noreferrer"
+        class="contact-item"
+      >
+        <i class="fa-brands fa-whatsapp"></i>
+        <div>
+          <h4>WhatsApp</h4>
+          <p>+92 337 9708390</p>
+        </div>
+      </a>
+
+      <div class="contact-item">
+        <i class="fa-solid fa-location-dot"></i>
+        <div>
+          <h4>Location</h4>
+          <p>Available Worldwide (Remote)</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="social-links">
+      <a
+        href="https://www.linkedin.com/in/moiz-haider-917221372/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="LinkedIn"
+      >
+        <i class="fa-brands fa-linkedin-in"></i>
+      </a>
+      <a
+        href="https://github.com/Moiz-Khattana"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="GitHub"
+      >
+        <i class="fa-brands fa-github"></i>
+      </a>
+    </div>
+  </div>
+   <form class="contact-form reveal" id="contactForm">
+  <div class="form-row">
+    <div class="form-group">
+      <label>Your Name</label>
+      <input type="text" name="name" required placeholder="John Doe">
+    </div>
+    <div class="form-group">
+      <label>Your Email</label>
+      <input type="email" name="email" required placeholder="john@example.com">
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>Inquiry Type</label>
+      <div class="custom-select-wrap">
+        <select name="inquiry" id="inquirySelect" required>
+          <option value="" disabled selected>Select an option...</option>
+          <optgroup label="🛍️ Shopify Services">
+            <option value="Theme Development">Theme Development</option>
+            <option value="Custom Store Build">Custom Store Build</option>
+            <option value="Shopify App Development">Shopify App Development</option>
+            <option value="Store Migration">Store Migration</option>
+            <option value="Speed Optimization">Speed Optimization</option>
+            <option value="Third-Party Integration">Third-Party Integration</option>
+          </optgroup>
+          <optgroup label="🔧 Support">
+            <option value="Bug Fix">Bug Fix / Issue</option>
+            <option value="Maintenance">Ongoing Maintenance</option>
+            <option value="Consultation">Free Consultation</option>
+          </optgroup>
+          <optgroup label="💬 Other">
+            <option value="Collaboration">Collaboration</option>
+            <option value="Other">Other</option>
+          </optgroup>
+        </select>
+        <i class="fa-solid fa-chevron-down select-arrow"></i>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Budget Range</label>
+      <div class="custom-select-wrap">
+        <select name="budget" id="budgetSelect" required>
+          <option value="" disabled selected>Select budget...</option>
+          <option value="Under $500">Under $500</option>
+          <option value="$500 - $1,000">$500 – $1,000</option>
+          <option value="$1,000 - $3,000">$1,000 – $3,000</option>
+          <option value="$3,000 - $5,000">$3,000 – $5,000</option>
+          <option value="$5,000+">$5,000+</option>
+          <option value="Let's Discuss">Let's Discuss</option>
+        </select>
+        <i class="fa-solid fa-chevron-down select-arrow"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Project Timeline</label>
+    <div class="timeline-options">
+      <label class="timeline-option">
+        <input type="radio" name="timeline" value="ASAP">
+        <span><i class="fa-solid fa-bolt"></i> ASAP</span>
+      </label>
+      <label class="timeline-option">
+        <input type="radio" name="timeline" value="1-2 Weeks">
+        <span><i class="fa-solid fa-clock"></i> 1–2 Weeks</span>
+      </label>
+      <label class="timeline-option">
+        <input type="radio" name="timeline" value="1 Month">
+        <span><i class="fa-solid fa-calendar"></i> 1 Month</span>
+      </label>
+      <label class="timeline-option">
+        <input type="radio" name="timeline" value="Flexible">
+        <span><i class="fa-solid fa-leaf"></i> Flexible</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Message</label>
+    <textarea 
+      name="message" 
+      id="messageArea"
+      rows="5" 
+      required 
+      placeholder="Tell me about your project..."
+      maxlength="1000"
+    ></textarea>
+    <span class="char-count"><span id="charCount">0</span>/1000</span>
+  </div>
+
+  <button type="submit" class="btn btn-primary full-width" id="submitBtn">
+    Send Message <i class="fa-solid fa-paper-plane"></i>
+  </button>
+  <p class="form-status" id="formStatus"></p>
+</form>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container footer-container">
+    <a href="#home" class="logo">Moiz<span>.</span></a>
+    <p>&copy; <span id="year"></span> Moiz. All Rights Reserved.</p>
+    <a href="#home" class="back-to-top"><i class="fa-solid fa-arrow-up"></i></a>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
