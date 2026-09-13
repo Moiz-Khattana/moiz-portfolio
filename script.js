@@ -1,5 +1,5 @@
-// ===== Loader with Progress =====
-window.addEventListener('load', () => {
+// ===== Loader with Progress (Fast & Non-Blocking) =====
+document.addEventListener('DOMContentLoaded', () => {
   const loader = document.querySelector('.loader');
   const barFill = document.getElementById('loaderBarFill');
   const percentText = document.getElementById('loaderPercent');
@@ -7,18 +7,20 @@ window.addEventListener('load', () => {
   if (barFill && percentText) {
     let progress = 0;
     const interval = setInterval(() => {
-      progress += Math.floor(Math.random() * 12) + 5;
+      // Fast progress increment
+      progress += Math.floor(Math.random() * 15) + 8;
       if (progress >= 100) {
         progress = 100;
         clearInterval(interval);
-        setTimeout(() => loader.classList.add('hide'), 400);
+        setTimeout(() => {
+          if (loader) loader.classList.add('hide');
+        }, 300);
       }
       barFill.style.width = progress + '%';
       percentText.textContent = progress + '%';
-    }, 120);
+    }, 80);
   } else if (loader) {
-    // Fallback if elements missing
-    setTimeout(() => loader.classList.add('hide'), 800);
+    setTimeout(() => loader.classList.add('hide'), 600);
   }
 });
 
@@ -36,7 +38,7 @@ if (cursorDot && cursorOutline) {
     );
   });
 
-  document.querySelectorAll('a, button, .skill-card, .project-card').forEach(el => {
+  document.querySelectorAll('a, button, .skill-card, .project-card, .filter-btn').forEach(el => {
     el.addEventListener('mouseenter', () => cursorOutline.style.transform = 'translate(-50%,-50%) scale(1.6)');
     el.addEventListener('mouseleave', () => cursorOutline.style.transform = 'translate(-50%,-50%) scale(1)');
   });
@@ -55,6 +57,7 @@ if (hamburger && navLinks) {
   document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
       navLinks.classList.remove('active');
+      hamburger.classList.remove('active');
     });
   });
 }
@@ -207,11 +210,9 @@ const submitBtn = document.getElementById('submitBtn');
 const messageArea = document.getElementById('messageArea');
 const charCount = document.getElementById('charCount');
 
-// ✅ FIX: Only the ID part, NOT the full URL
 const FORMSPREE_ID = 'xvkpwpgr'; 
 
 if (contactForm) {
-  // Character counter
   if (messageArea && charCount) {
     messageArea.addEventListener('input', () => {
       const count = messageArea.value.length;
@@ -223,28 +224,21 @@ if (contactForm) {
     });
   }
 
-  // Select color fix on change
   document.querySelectorAll('.custom-select-wrap select').forEach(select => {
     select.addEventListener('change', function () {
       if (this.value) this.style.color = 'var(--text)';
     });
   });
 
-  // Form Submit
   contactForm.addEventListener('submit', async function (e) {
     e.preventDefault();
 
-    // ✅ FIX: Check if ID is still the placeholder
     if (FORMSPREE_ID === 'YOUR_FORM_ID' || FORMSPREE_ID === '') {
-      formStatus.innerHTML = `
-        ⚠️ Formspree ID not set. 
-        Check script.js line 165.
-      `;
+      formStatus.innerHTML = `⚠️ Formspree ID not set. Check script.js line 165.`;
       formStatus.className = 'form-status error';
       return;
     }
 
-    // Validate timeline radio
     const timeline = contactForm.querySelector('input[name="timeline"]:checked');
     if (!timeline) {
       formStatus.textContent = '⚠️ Please select a project timeline.';
@@ -252,13 +246,11 @@ if (contactForm) {
       return;
     }
 
-    // Set loading state
     submitBtn.classList.add('loading');
     submitBtn.innerHTML = 'Sending... <i class="fa-solid fa-spinner"></i>';
     formStatus.textContent = '';
     formStatus.className = 'form-status';
 
-    // Build payload
     const data = {
       name: contactForm.name.value,
       email: contactForm.email.value,
@@ -269,7 +261,6 @@ if (contactForm) {
     };
 
     try {
-      // ✅ FIX: Correct URL construction
       const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
         method: 'POST',
         headers: {
@@ -282,7 +273,6 @@ if (contactForm) {
       const result = await response.json();
 
       if (response.ok) {
-        // ✅ Success
         submitBtn.innerHTML = '✓ Sent! <i class="fa-solid fa-check"></i>';
         submitBtn.style.background = 'linear-gradient(135deg, #00c853, #00a844)';
         submitBtn.classList.remove('loading');
@@ -293,35 +283,29 @@ if (contactForm) {
         `;
         formStatus.className = 'form-status success';
 
-        // Reset form fields
         contactForm.reset();
         if (charCount) charCount.textContent = '0';
 
-        // Reset selects color
         document.querySelectorAll('.custom-select-wrap select').forEach(s => {
           s.style.color = '';
         });
 
-        // Reset button after 4s
         setTimeout(() => {
           submitBtn.innerHTML = 'Send Message <i class="fa-solid fa-paper-plane"></i>';
           submitBtn.style.background = '';
         }, 4000);
 
-        // Clear status after 8s
         setTimeout(() => {
           formStatus.textContent = '';
           formStatus.className = 'form-status';
         }, 8000);
 
       } else {
-        // Formspree returned an error
         const errMsg = result?.errors?.[0]?.message || 'Submission failed. Please try again.';
         throw new Error(errMsg);
       }
 
     } catch (error) {
-      // ❌ Network / fetch error
       submitBtn.classList.remove('loading');
       submitBtn.innerHTML = 'Send Message <i class="fa-solid fa-paper-plane"></i>';
 
@@ -367,21 +351,6 @@ document.addEventListener('click', () => {
   }
 });
 
-
-    img.addEventListener('error', function () {
-      i++;
-      if (i < list.length) {
-        img.src = list[i];
-      } else {
-        // final fallback: show a Shopify icon placeholder
-        const wrap = img.closest('.project-img');
-        wrap.classList.add('shot-failed', 'shot-loaded');
-        img.remove();
-      }
-    });
-  });
-})();
-
 // ===== Smooth Anchor Scroll Offset Fix =====
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
@@ -394,5 +363,51 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
       window.scrollTo({ top, behavior: 'smooth' });
     }
+  });
+});
+
+// ===== Live Website Screenshots Fallback Handlers =====
+document.addEventListener('DOMContentLoaded', () => {
+  const siteImages = document.querySelectorAll('img.site-shot');
+  
+  siteImages.forEach(img => {
+    const site = img.dataset.site;
+    if (!site) return;
+
+    const enc = encodeURIComponent(site);
+    const providers = [
+      `https://s0.wp.com/mshots/v1/${enc}?w=1000&h=750`,
+      `https://image.thum.io/get/width/1000/crop/750/noanimate/${site}`,
+      `https://api.microlink.io/?url=${enc}&screenshot=true&meta=false&embed=screenshot.url`
+    ];
+    let providerIndex = 0;
+
+    const markAsLoaded = () => {
+      const wrap = img.closest('.project-img');
+      if (wrap) wrap.classList.add('shot-loaded');
+    };
+
+    img.addEventListener('load', () => {
+      // If mshots returns its generating placeholder banner, wait and retry once
+      if (img.naturalWidth < 80 && providerIndex === 0) {
+        setTimeout(() => {
+          img.src = providers[0] + '&r=' + Date.now();
+        }, 3000);
+        return;
+      }
+      markAsLoaded();
+    });
+
+    img.addEventListener('error', () => {
+      providerIndex++;
+      if (providerIndex < providers.length) {
+        img.src = providers[providerIndex];
+      } else {
+        // Fallback placeholder container if all screenshot engines fail
+        const wrap = img.closest('.project-img');
+        if (wrap) wrap.classList.add('shot-failed', 'shot-loaded');
+        img.remove();
+      }
+    });
   });
 });
