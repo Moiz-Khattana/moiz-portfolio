@@ -367,6 +367,50 @@ document.addEventListener('click', () => {
   }
 });
 
+
+<!-- ===== Live Screenshot Loader + Fallback Chain ===== -->
+(function () {
+  // Screenshot providers in priority order
+  function providers(url) {
+    const enc = encodeURIComponent(url);
+    return [
+      'https://s0.wp.com/mshots/v1/' + enc + '?w=1000&h=750',
+      'https://image.thum.io/get/width/1000/crop/750/noanimate/' + url,
+      'https://api.microlink.io/?url=' + enc + '&screenshot=true&meta=false&embed=screenshot.url'
+    ];
+  }
+
+  document.querySelectorAll('img.site-shot').forEach(function (img) {
+    const site = img.dataset.site;
+    const list = providers(site);
+    let i = 0;
+
+    // mark loaded (hides skeleton)
+    function done() { img.closest('.project-img').classList.add('shot-loaded'); }
+
+    img.addEventListener('load', function () {
+      // mshots returns a tiny grey placeholder while generating -> retry once
+      if (img.naturalWidth < 60 && i === 0) {
+        setTimeout(function () { img.src = list[0] + '&r=' + Date.now(); }, 2500);
+        return;
+      }
+      done();
+    });
+
+    img.addEventListener('error', function () {
+      i++;
+      if (i < list.length) {
+        img.src = list[i];
+      } else {
+        // final fallback: show a Shopify icon placeholder
+        const wrap = img.closest('.project-img');
+        wrap.classList.add('shot-failed', 'shot-loaded');
+        img.remove();
+      }
+    });
+  });
+})();
+
 // ===== Smooth Anchor Scroll Offset Fix =====
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
