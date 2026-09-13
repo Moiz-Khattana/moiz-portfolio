@@ -411,3 +411,47 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+// ===== Live Website Screenshots Fallback Handlers =====
+document.addEventListener('DOMContentLoaded', () => {
+  const siteImages = document.querySelectorAll('img.site-shot');
+  
+  siteImages.forEach(img => {
+    const site = img.dataset.site;
+    if (!site) return;
+
+    const enc = encodeURIComponent(site);
+    // Thum.io first (no W logo), then mShots, then Microlink
+    const providers = [
+      `https://image.thum.io/get/width/1200/crop/900/noanimate/${site}`,
+      `https://s0.wp.com/mshots/v1/${enc}?w=1200&h=900`,
+      `https://api.microlink.io/?url=${enc}&screenshot=true&meta=false&embed=screenshot.url`
+    ];
+    let providerIndex = 0;
+
+    const markAsLoaded = () => {
+      const wrap = img.closest('.project-img');
+      if (wrap) wrap.classList.add('shot-loaded');
+    };
+
+    img.addEventListener('load', () => {
+      // If thum.io returns very small image (fail case), try next provider
+      if (img.naturalWidth < 100 && providerIndex < providers.length - 1) {
+        providerIndex++;
+        img.src = providers[providerIndex];
+        return;
+      }
+      markAsLoaded();
+    });
+
+    img.addEventListener('error', () => {
+      providerIndex++;
+      if (providerIndex < providers.length) {
+        img.src = providers[providerIndex];
+      } else {
+        const wrap = img.closest('.project-img');
+        if (wrap) wrap.classList.add('shot-failed', 'shot-loaded');
+        img.remove();
+      }
+    });
+  });
+});
