@@ -37,6 +37,133 @@ a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 button { cursor: pointer; font-family: inherit; border: none; background: none; }
 section { padding: 100px 0; position: relative; }
+/* ======================================================
+   PROJECT LIVE SCREENSHOT PREVIEWS
+====================================================== */
+
+.project-img {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;          /* keeps every card equal height */
+  overflow: hidden;
+  background: linear-gradient(135deg, #12121f 0%, #1c1c2e 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Browser-style top bar (fake chrome dots) */
+.project-img.is-shot::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 26px;
+  background: rgba(12, 12, 20, 0.92);
+  z-index: 3;
+}
+.project-img.is-shot::after {
+  content: "";
+  position: absolute;
+  top: 9px;
+  left: 12px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff5f57;
+  box-shadow: 14px 0 0 #febc2e, 28px 0 0 #28c840;
+  z-index: 4;
+}
+
+/* The screenshot itself */
+.project-img .site-shot {
+  position: absolute;
+  top: 26px;                      /* sits under the fake browser bar */
+  left: 0;
+  width: 100%;
+  height: calc(100% - 26px);
+  object-fit: cover;
+  object-position: top center;    /* shows the hero/header of the store */
+  opacity: 0;
+  transform: scale(1.01);
+  transition: opacity .5s ease, transform .6s ease;
+  z-index: 2;
+}
+.project-img.shot-loaded .site-shot { opacity: 1; }
+.project-card:hover .project-img .site-shot { transform: scale(1.07); }
+
+/* Loading skeleton shimmer */
+.shot-skeleton {
+  position: absolute;
+  inset: 26px 0 0 0;
+  z-index: 1;
+  background: linear-gradient(100deg,
+              rgba(255,255,255,.03) 20%,
+              rgba(255,255,255,.10) 40%,
+              rgba(255,255,255,.03) 60%);
+  background-size: 250% 100%;
+  animation: shotShimmer 1.4s linear infinite;
+}
+.project-img.shot-loaded .shot-skeleton { display: none; }
+
+@keyframes shotShimmer {
+  0%   { background-position: 150% 0; }
+  100% { background-position: -50% 0; }
+}
+
+/* Hover overlay button */
+.img-overlay {
+  position: absolute;
+  inset: 26px 0 0 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: .9rem;
+  font-weight: 600;
+  letter-spacing: .3px;
+  color: #fff;
+  background: rgba(10, 10, 18, 0.65);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+.project-card:hover .img-overlay { opacity: 1; }
+
+/* Icon-only cards (apps without a live URL) */
+.project-img.app-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.project-img.app-preview i {
+  font-size: 3.4rem;
+  color: #95bf47;                 /* Shopify green */
+  opacity: .85;
+  transition: transform .4s ease;
+}
+.project-card:hover .project-img.app-preview i { transform: scale(1.12) rotate(-4deg); }
+
+/* If every screenshot provider fails */
+.project-img.shot-failed::before { content: ""; }
+.project-img.shot-failed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.project-img.shot-failed .shot-skeleton { display: none; }
+.project-img.shot-failed .img-overlay { opacity: 1; }
+
+/* Respect reduced-motion users */
+@media (prefers-reduced-motion: reduce) {
+  .shot-skeleton { animation: none; }
+  .project-card:hover .project-img .site-shot { transform: none; }
+}
+
+/* Mobile tweak */
+@media (max-width: 600px) {
+  .project-img { aspect-ratio: 16 / 11; }
+}
 
 /* Custom cursor - desktop only */
 .cursor-dot, .cursor-outline {
