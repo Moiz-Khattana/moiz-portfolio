@@ -14,6 +14,14 @@
   --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
   --font-body: 'Poppins', sans-serif;
   --font-head: 'Space Grotesk', sans-serif;
+
+  /* Aliases used by Process/Marquee sections (kept in sync with core theme vars) */
+  --bg-primary: var(--dark);
+  --bg-secondary: var(--dark-2);
+  --bg-card: var(--dark-3);
+  --text-primary: var(--text);
+  --text-secondary: var(--text-muted);
+  --accent: var(--secondary);
 }
 
 html { scroll-behavior: smooth; }
@@ -37,6 +45,109 @@ a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 button { cursor: pointer; font-family: inherit; border: none; background: none; }
 section { padding: 100px 0; position: relative; }
+
+/* ======================================================
+   THREE.JS 3D CANVAS CONTAINERS
+   All canvases are decorative, non-interactive, and sit
+   behind foreground content via stacking order (DOM order
+   + default z-index auto on positioned ancestors).
+====================================================== */
+
+/* 1. Global fixed background particle canvas */
+.bg3d-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg3d-canvas { opacity: 0.3; }
+}
+
+@media (max-width: 767px) {
+  .bg3d-canvas { opacity: 0.6; }
+}
+
+/* 2. Hero section 3D object container */
+.hero-3d-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-3d-canvas canvas {
+  display: block;
+  max-width: 100%;
+}
+
+@media (max-width: 767px) {
+  .hero-3d-canvas { opacity: 0.6; }
+}
+
+/* 3. About section decorative accent (small rotating shape) */
+.about-3d-canvas {
+  position: absolute;
+  top: -24px;
+  left: -24px;
+  width: 110px;
+  height: 110px;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.85;
+  filter: drop-shadow(0 0 12px rgba(0, 200, 83, 0.25));
+}
+
+.about-3d-canvas canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+@media (max-width: 767px) {
+  .about-3d-canvas {
+    width: 80px;
+    height: 80px;
+    top: -16px;
+    left: -16px;
+  }
+}
+
+/* 4. Process CTA background accent */
+.process-cta {
+  position: relative;
+  overflow: hidden;
+}
+
+.process-cta-3d-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.process-cta-3d-canvas canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Ensure CTA content/visual sit above the 3D accent */
+.process-cta-content,
+.process-cta-visual {
+  position: relative;
+  z-index: 1;
+}
+
 /* ======================================================
    PROJECT LIVE SCREENSHOT PREVIEWS
 ====================================================== */
@@ -129,6 +240,7 @@ section { padding: 100px 0; position: relative; }
   transition: opacity .35s ease;
 }
 .project-card:hover .img-overlay { opacity: 1; }
+
 /* ============================================
    PROCESS SECTION — How I Work
    ============================================ */
@@ -468,6 +580,7 @@ section { padding: 100px 0; position: relative; }
   display: flex;
   flex-direction: column;
   gap: 24px;
+  position: relative;
 }
 
 .marquee-track {
@@ -868,13 +981,14 @@ section { padding: 100px 0; position: relative; }
 .stat h3 { font-family: var(--font-head); font-size:1.8rem; color: var(--primary); }
 .stat p { color: var(--text-muted); font-size:.85rem; margin-top:4px; }
 
-.hero-visual { position:relative; display:flex; justify-content:center; }
+.hero-visual { position:relative; display:flex; justify-content:center; z-index:1; }
 .hero-card {
   background: var(--dark-3); border:1px solid var(--border);
   border-radius:16px; overflow:hidden; width:100%; max-width:420px;
   box-shadow: 0 20px 60px rgba(0,0,0,.5);
   transform: perspective(1000px) rotateY(-8deg) rotateX(4deg);
   transition: transform .4s;
+  position: relative;
 }
 .hero-card:hover { transform: perspective(1000px) rotateY(0) rotateX(0); }
 .hero-card-header { display:flex; gap:8px; padding:14px 18px; background: rgba(255,255,255,.03); }
@@ -888,6 +1002,7 @@ section { padding: 100px 0; position: relative; }
   width:60px; height:60px; background:#fff; border-radius:16px; padding:12px;
   animation: float 4s ease-in-out infinite;
   box-shadow: 0 10px 30px rgba(0,0,0,.4);
+  z-index: 2;
 }
 
 .scroll-down {
@@ -916,11 +1031,14 @@ section { padding: 100px 0; position: relative; }
   display:flex; align-items:center; justify-content:center;
   font-size: 8rem; color: var(--primary);
   background-image: radial-gradient(circle at 30% 30%, rgba(0,200,83,.15), transparent 60%);
+  position: relative;
+  z-index: 1;
 }
 .exp-badge {
   position:absolute; bottom:-20px; right:-20px;
   background: var(--gradient); padding:20px 24px; border-radius:16px;
   text-align:center; box-shadow: 0 15px 30px rgba(0,200,83,.3);
+  z-index: 3;
 }
 .exp-badge h3 { font-size:2rem; font-family: var(--font-head); }
 .exp-badge p { font-size:.75rem; margin-top:4px; }
@@ -1302,4 +1420,14 @@ a.contact-item:hover p {
   .form-row { grid-template-columns: 1fr; }
   .hero-stats { flex-wrap:wrap; gap:24px; }
   .footer-container { flex-direction:column; gap:16px; text-align:center; }
+}
+
+/* ===== Reduced Motion — Global 3D Safety Net ===== */
+@media (prefers-reduced-motion: reduce) {
+  .bg3d-canvas,
+  .hero-3d-canvas,
+  .about-3d-canvas,
+  .process-cta-3d-canvas {
+    opacity: 0.25;
+  }
 }
