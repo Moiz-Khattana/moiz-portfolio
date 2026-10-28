@@ -210,7 +210,7 @@ const submitBtn = document.getElementById('submitBtn');
 const messageArea = document.getElementById('messageArea');
 const charCount = document.getElementById('charCount');
 
-const FORMSPREE_ID = 'xvkpwpgr'; 
+const FORMSPREE_ID = 'xvkpwpgr';
 
 if (contactForm) {
   if (messageArea && charCount) {
@@ -369,52 +369,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // ===== Live Website Screenshots Fallback Handlers =====
 document.addEventListener('DOMContentLoaded', () => {
   const siteImages = document.querySelectorAll('img.site-shot');
-  
-  siteImages.forEach(img => {
-    const site = img.dataset.site;
-    if (!site) return;
 
-    const enc = encodeURIComponent(site);
-    const providers = [
-      `https://s0.wp.com/mshots/v1/${enc}?w=1000&h=750`,
-      `https://image.thum.io/get/width/1000/crop/750/noanimate/${site}`,
-      `https://api.microlink.io/?url=${enc}&screenshot=true&meta=false&embed=screenshot.url`
-    ];
-    let providerIndex = 0;
-
-    const markAsLoaded = () => {
-      const wrap = img.closest('.project-img');
-      if (wrap) wrap.classList.add('shot-loaded');
-    };
-
-    img.addEventListener('load', () => {
-      // If mshots returns its generating placeholder banner, wait and retry once
-      if (img.naturalWidth < 80 && providerIndex === 0) {
-        setTimeout(() => {
-          img.src = providers[0] + '&r=' + Date.now();
-        }, 3000);
-        return;
-      }
-      markAsLoaded();
-    });
-
-    img.addEventListener('error', () => {
-      providerIndex++;
-      if (providerIndex < providers.length) {
-        img.src = providers[providerIndex];
-      } else {
-        // Fallback placeholder container if all screenshot engines fail
-        const wrap = img.closest('.project-img');
-        if (wrap) wrap.classList.add('shot-failed', 'shot-loaded');
-        img.remove();
-      }
-    });
-  });
-});
-// ===== Live Website Screenshots Fallback Handlers =====
-document.addEventListener('DOMContentLoaded', () => {
-  const siteImages = document.querySelectorAll('img.site-shot');
-  
   siteImages.forEach(img => {
     const site = img.dataset.site;
     if (!site) return;
@@ -455,3 +410,335 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+// ============================================================
+// ===== THREE.JS 3D ANIMATIONS ================================
+// ============================================================
+(function initThreeJSAnimations() {
+  if (typeof THREE === 'undefined') {
+    console.warn('Three.js not loaded — skipping 3D animations.');
+    return;
+  }
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isMobile = window.innerWidth < 768;
+
+  // Shared normalized mouse position (-1 to 1)
+  const mouse = { x: 0, y: 0 };
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+  });
+
+  /* ---------------------------------------------------------
+     1. GLOBAL BACKGROUND PARTICLES  →  #bg3d-canvas
+     Fixed full-page starfield, subtle parallax on mouse move
+  --------------------------------------------------------- */
+  function initBackgroundScene() {
+    const canvas = document.getElementById('bg3d-canvas');
+    if (!canvas) return;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+      60, window.innerWidth / window.innerHeight, 0.1, 1000
+    );
+    camera.position.z = 50;
+
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const particleCount = isMobile ? 350 : 800;
+    const positions = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * 120;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 120;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 120;
+    }
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+    const material = new THREE.PointsMaterial({
+      color: 0x00c853,
+      size: 0.5,
+      transparent: true,
+      opacity: 0.45,
+      sizeAttenuation: true
+    });
+
+    const points = new THREE.Points(geometry, material);
+    scene.add(points);
+
+    function resize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+    window.addEventListener('resize', resize);
+
+    let rafId;
+    function animate() {
+      rafId = requestAnimationFrame(animate);
+      points.rotation.y += 0.0006;
+      points.rotation.x += 0.0002;
+      camera.position.x += (mouse.x * 5 - camera.position.x) * 0.02;
+      camera.position.y += (mouse.y * 5 - camera.position.y) * 0.02;
+      camera.lookAt(scene.position);
+      renderer.render(scene, camera);
+    }
+
+    if (!prefersReducedMotion) {
+      animate();
+    } else {
+      renderer.render(scene, camera);
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        cancelAnimationFrame(rafId);
+      } else if (!prefersReducedMotion) {
+        animate();
+      }
+    });
+  }
+
+  /* ---------------------------------------------------------
+     2. HERO 3D OBJECT  →  #hero3d
+     Wireframe icosahedron + glowing core + orbiting particles
+  --------------------------------------------------------- */
+  function initHeroScene() {
+    const container = document.getElementById('hero3d');
+    if (!container) return;
+
+    const width = container.clientWidth || window.innerWidth;
+    const height = container.clientHeight || window.innerHeight;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
+    camera.position.z = 6;
+
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(width, height);
+    container.appendChild(renderer.domElement);
+
+    // Outer wireframe shape
+    const geometry = new THREE.IcosahedronGeometry(2, 1);
+    const material = new THREE.MeshBasicMaterial({
+      color: 0x00c853,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.55
+    });
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    // Inner glowing core
+    const coreGeo = new THREE.IcosahedronGeometry(0.9, 0);
+    const coreMat = new THREE.MeshBasicMaterial({
+      color: 0x00e676,
+      transparent: true,
+      opacity: 0.15
+    });
+    const core = new THREE.Mesh(coreGeo, coreMat);
+    scene.add(core);
+
+    // Orbiting particle halo
+    const particleCount = isMobile ? 60 : 150;
+    const positions = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount; i++) {
+      const radius = 3 + Math.random() * 2;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.random() * Math.PI;
+      positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+      positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+      positions[i * 3 + 2] = radius * Math.cos(phi);
+    }
+    const particleGeo = new THREE.BufferGeometry();
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const particleMat = new THREE.PointsMaterial({
+      color: 0x00c853,
+      size: 0.04,
+      transparent: true,
+      opacity: 0.7
+    });
+    const particles = new THREE.Points(particleGeo, particleMat);
+    scene.add(particles);
+
+    function resize() {
+      const w = container.clientWidth || window.innerWidth;
+      const h = container.clientHeight || window.innerHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    }
+    window.addEventListener('resize', resize);
+
+    let rafId;
+    function animate() {
+      rafId = requestAnimationFrame(animate);
+      mesh.rotation.x += 0.003;
+      mesh.rotation.y += 0.004;
+      core.rotation.y -= 0.002;
+      particles.rotation.y += 0.0015;
+
+      // Subtle mouse-follow tilt
+      mesh.rotation.y += mouse.x * 0.0015;
+      mesh.rotation.x += mouse.y * 0.0015;
+
+      renderer.render(scene, camera);
+    }
+
+    if (!prefersReducedMotion) {
+      animate();
+    } else {
+      renderer.render(scene, camera);
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) cancelAnimationFrame(rafId);
+      else if (!prefersReducedMotion) animate();
+    });
+  }
+
+  /* ---------------------------------------------------------
+     3. ABOUT SECTION ACCENT  →  #about3d
+     Small rotating torus knot near the profile photo
+  --------------------------------------------------------- */
+  function initAboutScene() {
+    const container = document.getElementById('about3d');
+    if (!container) return;
+
+    const width = container.clientWidth || 150;
+    const height = container.clientHeight || 150;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
+    camera.position.z = 4;
+
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(width, height);
+    container.appendChild(renderer.domElement);
+
+    const geometry = new THREE.TorusKnotGeometry(0.8, 0.25, 100, 16);
+    const material = new THREE.MeshNormalMaterial({ wireframe: true });
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
+
+    function resize() {
+      const w = container.clientWidth || width;
+      const h = container.clientHeight || height;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    }
+    window.addEventListener('resize', resize);
+
+    let rafId;
+    function animate() {
+      rafId = requestAnimationFrame(animate);
+      mesh.rotation.x += 0.01;
+      mesh.rotation.y += 0.015;
+      renderer.render(scene, camera);
+    }
+
+    // Only animate while visible on screen (perf-friendly)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (!prefersReducedMotion) animate();
+        } else {
+          cancelAnimationFrame(rafId);
+        }
+      });
+    }, { threshold: 0.1 });
+    observer.observe(container);
+
+    if (prefersReducedMotion) renderer.render(scene, camera);
+  }
+
+  /* ---------------------------------------------------------
+     4. PROCESS CTA ACCENT  →  #processCta3d
+     Soft drifting particle field behind the CTA stats
+  --------------------------------------------------------- */
+  function initProcessCtaScene() {
+    const container = document.getElementById('processCta3d');
+    if (!container) return;
+
+    const width = container.clientWidth || window.innerWidth;
+    const height = container.clientHeight || 300;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
+    camera.position.z = 8;
+
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    renderer.setSize(width, height);
+    container.appendChild(renderer.domElement);
+
+    const particleCount = isMobile ? 80 : 180;
+    const positions = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * 20;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
+    }
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const material = new THREE.PointsMaterial({
+      color: 0x00c853,
+      size: 0.06,
+      transparent: true,
+      opacity: 0.4
+    });
+    const points = new THREE.Points(geometry, material);
+    scene.add(points);
+
+    function resize() {
+      const w = container.clientWidth || window.innerWidth;
+      const h = container.clientHeight || height;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    }
+    window.addEventListener('resize', resize);
+
+    let rafId;
+    function animate() {
+      rafId = requestAnimationFrame(animate);
+      points.rotation.y += 0.001;
+      points.rotation.x += 0.0005;
+      renderer.render(scene, camera);
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (!prefersReducedMotion) animate();
+        } else {
+          cancelAnimationFrame(rafId);
+        }
+      });
+    }, { threshold: 0.1 });
+    observer.observe(container);
+
+    if (prefersReducedMotion) renderer.render(scene, camera);
+  }
+
+  // ===== Initialize all 3D scenes =====
+  function initAll() {
+    initBackgroundScene();
+    initHeroScene();
+    initAboutScene();
+    initProcessCtaScene();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    initAll();
+  }
+})();
