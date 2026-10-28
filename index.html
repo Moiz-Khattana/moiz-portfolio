@@ -16,6 +16,12 @@
 </head>
 <body>
 
+<!-- ============================= -->
+<!-- GLOBAL 3D BACKGROUND CANVAS   -->
+<!-- Fixed, full-page, behind all content -->
+<!-- ============================= -->
+<canvas id="bg3d-canvas" class="bg3d-canvas"></canvas>
+
 <!-- Cursor -->
 <div class="cursor-dot"></div>
 <div class="cursor-outline"></div>
@@ -61,6 +67,11 @@
     <div class="blob blob1"></div>
     <div class="blob blob2"></div>
     <div class="grid-overlay"></div>
+    <!-- ============================= -->
+    <!-- HERO 3D CANVAS CONTAINER      -->
+    <!-- Floating 3D object / particles behind hero text -->
+    <!-- ============================= -->
+    <div id="hero3d" class="hero-3d-canvas"></div>
   </div>
   <div class="container hero-container">
     <div class="hero-text">
@@ -133,6 +144,11 @@
           <h3>4+</h3>
           <p>Years of<br>Experience</p>
         </div>
+        <!-- ============================= -->
+        <!-- ABOUT 3D ACCENT CONTAINER     -->
+        <!-- Small rotating 3D shape near profile image -->
+        <!-- ============================= -->
+        <div id="about3d" class="about-3d-canvas"></div>
       </div>
     </div>
     <div class="about-text reveal">
@@ -741,6 +757,11 @@
 
     <!-- Process CTA -->
     <div class="process-cta reveal">
+      <!-- ============================= -->
+      <!-- PROCESS CTA 3D ACCENT CONTAINER -->
+      <!-- Subtle rotating 3D shape behind stats -->
+      <!-- ============================= -->
+      <div id="processCta3d" class="process-cta-3d-canvas"></div>
       <div class="process-cta-content">
         <h3>Ready to Start Your Project?</h3>
         <p>Let's follow this proven process to build your dream Shopify store.</p>
@@ -1225,6 +1246,9 @@
     <a href="#home" class="back-to-top"><i class="fa-solid fa-arrow-up"></i></a>
   </div>
 </footer>
+
+<!-- Three.js Library (load before script.js so your 3D code can use THREE) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <script src="script.js"></script>
 </body>
